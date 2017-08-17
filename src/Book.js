@@ -7,7 +7,7 @@ class Book extends Component {
         <div className="book-top">
           <div className="book-cover" style={{ width: this.props.coverWidth, height: this.props.coverHeight, backgroundImage: `url(${this.props.coverURL})` }}></div>
           <div className="book-shelf-changer">
-            <select>
+            <select defaultValue="none">
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>

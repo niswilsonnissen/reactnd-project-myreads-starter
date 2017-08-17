@@ -8,7 +8,8 @@ import SearchBooks from './SearchBooks'
 class BooksApp extends React.Component {
 
   state = {
-    books: []
+    books: [],
+    searchResult: []
   }
 
   componentDidMount() {
@@ -17,11 +18,27 @@ class BooksApp extends React.Component {
     })
   }
 
+  searchBooks(query) {
+    BooksAPI.search(query, 10).then((response) => {
+      if (response.error) {
+        // TODO: Display error message to end-user
+        console.log("Search returned error: ", response.error);
+      } else {        
+        this.setState({ searchResult: response })
+      }
+    })
+  }
+
   render() {
     return (
       <div className="app">
         <Route path="/search" render={({ history }) => (
-          <SearchBooks />
+          <SearchBooks 
+            books={this.state.searchResult}
+            onSearch={(query) => {
+              this.searchBooks(query)
+            }}
+          />
         )} />
         <Route exact path="/" render={({ history }) => (
           <ListBooks books={this.state.books} />
