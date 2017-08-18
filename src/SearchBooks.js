@@ -5,6 +5,12 @@ import Book from './Book'
 
 class SearchBooks extends Component {
 
+  handleBookShelfChange = (book, shelf) => {
+    if (typeof this.props.onBookShelfChange === 'function' && this.props.onBookShelfChange != null) {
+      this.props.onBookShelfChange(book, shelf)
+    }
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     const values = serializeForm(e.target, { hash: true })
@@ -39,6 +45,7 @@ class SearchBooks extends Component {
                   book={book}
                   coverWidth={128}
                   coverHeight={193}
+                  onShelfChange={this.handleBookShelfChange}
                 />
               </li>
           ))}

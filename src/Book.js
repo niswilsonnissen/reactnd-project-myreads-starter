@@ -3,6 +3,12 @@ import React, { Component } from 'react'
 class Book extends Component {
   static NO_COVER_URL = '/images/no_cover_url.png';
 
+  handleShelfChange = (e) => {
+    if (typeof this.props.onShelfChange === 'function' && this.props.onShelfChange != null) {
+      this.props.onShelfChange(this.props.book, e.target.value)
+    }
+  }
+
   render() {
     const book = this.props.book;
     const styles = {
@@ -10,13 +16,13 @@ class Book extends Component {
       height: this.props.coverHeight,
       backgroundImage: `url(${this.getCoverURL(book)})` 
     };
-    
+
     return (
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={styles}></div>
           <div className="book-shelf-changer">
-            <select defaultValue="none">
+            <select defaultValue="none" onChange={this.handleShelfChange}>
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>

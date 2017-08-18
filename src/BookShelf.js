@@ -3,6 +3,12 @@ import Book from './Book'
 
 class BookShelf extends Component {
 
+  handleBookShelfChange = (book, shelf) => {
+    if (typeof this.props.onBookShelfChange === 'function' && this.props.onBookShelfChange != null) {
+      this.props.onBookShelfChange(book, shelf);
+    }
+  }
+
   render() {
     return (
       <div className="bookshelf">
@@ -14,7 +20,8 @@ class BookShelf extends Component {
                 <Book 
                   book={book}
                   coverWidth={128}
-                  coverHeight={193}  
+                  coverHeight={193}
+                  onShelfChange={this.handleBookShelfChange}
                 />
               </li>
             ))}
