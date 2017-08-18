@@ -5,21 +5,12 @@ import Book from './Book'
 
 class SearchBooks extends Component {
 
-  static NO_COVER_URL = ''
-
   handleSubmit = (e) => {
     e.preventDefault();
     const values = serializeForm(e.target, { hash: true })
     if (this.props.onSearch && values.query) {
       this.props.onSearch(values.query)
     }
-  }
-
-  getCoverThumbnail(images) {
-    if (!images) {
-      return SearchBooks.NO_COVER_URL
-    }
-    return images["smallThumbnail"] || images["thumnnail"] || SearchBooks.NO_COVER_URL
   }
 
   render() {
@@ -45,11 +36,9 @@ class SearchBooks extends Component {
           {this.props.books.map((book) => (
               <li key={book.id}>
                 <Book
+                  book={book}
                   coverWidth={128}
                   coverHeight={193}
-                  coverURL={this.getCoverThumbnail(book.imageLinks)}
-                  title={book.title}
-                  authors={book.authors}
                 />
               </li>
           ))}
