@@ -23,29 +23,56 @@ class BooksApp extends React.Component {
       if (response.error) {
         // TODO: Display error message to end-user
         console.log("Search returned error: ", response.error);
-      } else {        
+      } else {
+        if (this.state.books && this.state.books.length) {
+          for (let resultBook of response) {
+            let book = this.state.books.find(b => b.id === resultBook.id);
+            if (book) {
+              resultBook.shelf = book.shelf;
+            }
+          }
+        }
         this.setState({ searchResult: response })
       }
     })
   }
 
+  updateBooks(books, updatedBook, shelf) {
+    let newState = [];
+    books.forEach(book => {
+      if (book.id === updatedBook.id) {
+        newState.push({
+          ...book,
+          shelf
+        });
+      } else {
+        newState.push(book);
+      }
+    });
+    return newState;
+  }
+
   updateBookShelf(book, shelf) {
     BooksAPI.update(book, shelf).then((response) => {
-      // TODO: Update the state according to response
+      let newState = {
+        books: this.updateBooks(this.state.books, book, shelf),
+        searchResult: this.updateBooks(this.state.searchResult, book, shelf)
+      };
+      this.setState(newState);
     })
   }
 
   render() {
     return (
-      <div className="app">
+      <div className="app" >
         <Route path="/search" render={({ history }) => (
-          <SearchBooks 
+          <SearchBooks
             books={this.state.searchResult}
             onSearch={(query) => {
               this.searchBooks(query)
             }}
             onBookShelfChange={(book, shelf) => {
-              this.updateBookShelf(book, shelf)
+              this.updateBookShelf(book, shelf);
             }}
           />
         )} />
