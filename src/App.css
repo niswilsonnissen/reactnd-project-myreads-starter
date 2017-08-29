@@ -154,6 +154,16 @@ body, .app {
   background-size: 20px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
+.book-shelf-changer.book-shelf-changer-wantToRead {
+  background-color: #ACA75D;
+}
+.book-shelf-changer.book-shelf-changer-read {
+  background-color: #5D60AC;
+}
+.book-shelf-changer.book-shelf-changer-none {
+  background-color: #AAABAD;
+}
+
 .book-shelf-changer select {
   width: 100%;
   height: 100%;

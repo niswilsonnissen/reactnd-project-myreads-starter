@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import ShelfSelect from './ShelfSelect'
 
 class Book extends Component {
   static NO_COVER_URL = '/images/no_cover_url.png';
 
-  handleShelfChange = (e) => {
+  handleShelfChange = (shelf) => {
     if (typeof this.props.onShelfChange === 'function' && this.props.onShelfChange != null) {
-      this.props.onShelfChange(this.props.book, e.target.value)
+      this.props.onShelfChange(this.props.book, shelf)
     }
   }
 
@@ -14,22 +15,14 @@ class Book extends Component {
     const styles = {
       width: this.props.coverWidth,
       height: this.props.coverHeight,
-      backgroundImage: `url(${this.getCoverURL(book)})` 
+      backgroundImage: `url(${this.getCoverURL(book)})`
     };
 
     return (
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={styles}></div>
-          <div className="book-shelf-changer">
-            <select defaultValue="none" value={this.props.book.shelf} onChange={this.handleShelfChange}>
-              <option value="none" disabled>Move to...</option>
-              <option value="currentlyReading">Currently Reading</option>
-              <option value="wantToRead">Want to Read</option>
-              <option value="read">Read</option>
-              <option value="none">None</option>
-            </select>
-          </div>
+          <ShelfSelect shelf={book.shelf || 'none'} onChange={this.handleShelfChange} />
         </div>
         <div className="book-title">{this.getTitle(book)}</div>
         <div className="book-authors">{this.getAuthors(book)}</div>
@@ -53,9 +46,9 @@ class Book extends Component {
 
   getCoverURL(book) {
     if (book && book.imageLinks) {
-      return book.imageLinks.smallThumbnail || book.imageLinks.thumbnail || Book.NO_COVER_URL
+      return book.imageLinks.smallThumbnail || book.imageLinks.thumbnail ||  Book.NO_COVER_URL
     }
-    
+
     return Book.NO_COVER_URL;
   }
 }
