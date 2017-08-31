@@ -19,6 +19,14 @@ class SearchBooks extends Component {
     }
   }
 
+  focus() {
+    this.queryInput.focus();
+  }
+
+  componentDidMount() {
+    this.focus();
+  }
+
   render() {
     return (
       <div className="search-books">
@@ -33,8 +41,12 @@ class SearchBooks extends Component {
             However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
             you don't find a specific author or title. Every search is limited by search terms.
           */}
-            <input type="text" name="query" placeholder="Search by title or author" />
-
+            <input
+              type="text"
+              name="query"
+              placeholder="Search by title or author"
+              ref={elem => { this.queryInput = elem; }}
+            />
           </form>
         </div>
         <div className="search-books-results">
