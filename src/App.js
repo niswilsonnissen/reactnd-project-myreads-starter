@@ -58,6 +58,15 @@ class BooksApp extends React.Component {
         books: this.updateBooks(this.state.books, book, shelf),
         searchResult: this.updateBooks(this.state.searchResult, book, shelf)
       };
+      const bookIndex = newState.books.findIndex(b => b.id === book.id);
+      if (bookIndex === -1 && shelf !== 'none') {
+        newState.books.push({
+            ...book,
+            shelf
+        });
+      } else if (bookIndex !== -1 && shelf === 'none') {
+        newState.books.splice(bookIndex, 1);
+      }
       this.setState(newState);
     })
   }
@@ -89,4 +98,4 @@ class BooksApp extends React.Component {
   }
 }
 
-export default BooksApp
+export default BooksApp;

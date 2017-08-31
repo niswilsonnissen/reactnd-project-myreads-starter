@@ -15,7 +15,7 @@ class ShelfSelect extends Component {
 
     return (
       <div className={styleClasses.join(' ')}>
-        <select defaultValue="none" value={shelf} onChange={this.handleChange}>
+        <select value={shelf} onChange={this.handleChange}>
           <option value="none" disabled>Move to...</option>
           <option value="currentlyReading">Currently Reading</option>
           <option value="wantToRead">Want to Read</option>
