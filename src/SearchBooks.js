@@ -7,10 +7,11 @@ import Book from './Book'
 class SearchBooks extends Component {
 
   state = {
-    books: []
+    books: [],
+    emptySearchResult: false
   }
 
-  handleBookShelfChange = (book, shelf) => {    
+  handleBookShelfChange = (book, shelf) => {
     if (typeof this.props.onBookShelfChange === 'function' && this.props.onBookShelfChange != null) {
       this.props.onBookShelfChange(book, shelf);
     }
@@ -35,22 +36,25 @@ class SearchBooks extends Component {
   }
 
   searchBooks(query) {
-    BooksAPI.search(query, 10).then((response) => {
-      if (response.error) {
-        // TODO: Display error message to end-user
-        console.log("Search returned error: ", response.error);
-      } else {
-        if (this.props.books && this.props.books.length) {
-          for (let resultBook of response) {
-            let book = this.props.books.find(b => b.id === resultBook.id);
-            if (book) {
-              resultBook.shelf = book.shelf;
+    if (query) {
+      BooksAPI.search(query, 10).then((response) => {
+        if (response.error) {
+          this.setState({ books: [], emptySearchResult: true });
+        } else {
+          if (this.props.books && this.props.books.length) {
+            for (let resultBook of response) {
+              let book = this.props.books.find(b => b.id === resultBook.id);
+              if (book) {
+                resultBook.shelf = book.shelf;
+              }
             }
           }
+          this.setState({ books: response, emptySearchResult: false })
         }
-        this.setState({ books: response })
-      }
-    })
+      });
+    } else {
+      alert("Please enter a search query");
+    }
   }
 
   focus() {
@@ -84,8 +88,13 @@ class SearchBooks extends Component {
           </form>
         </div>
         <div className="search-books-results">
+          {this.state.emptySearchResult && (
+            <div className="search-books-empty-result">
+              Your search did not return any results
+            </div>
+          )}
           <ol className="books-grid">
-          {this.state.books.map((book) => (
+            {this.state.books.map((book) => (
               <li key={book.id}>
                 <Book
                   book={book}
@@ -94,7 +103,7 @@ class SearchBooks extends Component {
                   onShelfChange={this.handleBookShelfChange}
                 />
               </li>
-          ))}
+            ))}
           </ol>
         </div>
       </div>
