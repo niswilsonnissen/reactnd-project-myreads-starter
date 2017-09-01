@@ -1,22 +1,57 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
+import * as BooksAPI from './BooksAPI'
 import Book from './Book'
 
 class SearchBooks extends Component {
 
-  handleBookShelfChange = (book, shelf) => {
+  state = {
+    books: []
+  }
+
+  handleBookShelfChange = (book, shelf) => {    
     if (typeof this.props.onBookShelfChange === 'function' && this.props.onBookShelfChange != null) {
-      this.props.onBookShelfChange(book, shelf)
+      this.props.onBookShelfChange(book, shelf);
     }
+    let books = [];
+    for (let searchResult of this.state.books) {
+      if (searchResult.id === book.id) {
+        books.push({
+          ...searchResult,
+          shelf
+        });
+      } else {
+        books.push(searchResult);
+      }
+    }
+    this.setState({ books });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const values = serializeForm(e.target, { hash: true })
-    if (this.props.onSearch && values.query) {
-      this.props.onSearch(values.query)
-    }
+    const values = serializeForm(e.target, { hash: true });
+    this.searchBooks(values.query);
+  }
+
+  searchBooks(query) {
+    console.log("in searchBooks: query ", query);
+    BooksAPI.search(query, 10).then((response) => {
+      if (response.error) {
+        // TODO: Display error message to end-user
+        console.log("Search returned error: ", response.error);
+      } else {
+        if (this.props.books && this.props.books.length) {
+          for (let resultBook of response) {
+            let book = this.props.books.find(b => b.id === resultBook.id);
+            if (book) {
+              resultBook.shelf = book.shelf;
+            }
+          }
+        }
+        this.setState({ books: response })
+      }
+    })
   }
 
   focus() {
@@ -51,7 +86,7 @@ class SearchBooks extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-          {this.props.books.map((book) => (
+          {this.state.books.map((book) => (
               <li key={book.id}>
                 <Book
                   book={book}
