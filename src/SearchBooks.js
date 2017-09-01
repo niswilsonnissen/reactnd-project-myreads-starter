@@ -35,7 +35,6 @@ class SearchBooks extends Component {
   }
 
   searchBooks(query) {
-    console.log("in searchBooks: query ", query);
     BooksAPI.search(query, 10).then((response) => {
       if (response.error) {
         // TODO: Display error message to end-user

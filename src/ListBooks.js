@@ -24,16 +24,19 @@ class ListBooks extends Component {
               title="Currently Reading"
               books={books.filter(book => book.shelf === "currentlyReading")}
               onBookShelfChange={this.handleBookShelfChange}
+              shelf="currentlyReading"
             />
             <BookShelf
               title="Want to Read"
               books={books.filter(book => book.shelf === "wantToRead")}
               onBookShelfChange={this.handleBookShelfChange}
+              shelf="wantToRead"
             />
             <BookShelf
               title="Read"
               books={books.filter(book => book.shelf === "read")}
               onBookShelfChange={this.handleBookShelfChange}
+              shelf="read"
             />
           </div>
         </div>

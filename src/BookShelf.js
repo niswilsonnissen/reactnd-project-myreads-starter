@@ -10,9 +10,11 @@ class BookShelf extends Component {
   }
 
   render() {
+    const { shelf, title } = this.props;
+    const styleClasses = ['bookshelf-title-marker', `bookshelf-title-marker-${shelf}`]
     return (
       <div className="bookshelf">
-        <h2 className="bookshelf-title">{this.props.title}</h2>
+        <h2 className="bookshelf-title"><span className={styleClasses.join(' ')}></span> {title}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
             {this.props.books.map((book) => (

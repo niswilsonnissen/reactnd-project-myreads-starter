@@ -39,6 +39,22 @@ body, .app {
 .bookshelf-title {
   border-bottom: 1px solid #dedede;
 }
+.bookshelf-title-marker {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.bookshelf-title-marker.bookshelf-title-marker-currentlyReading {
+  background-color: #60ac5d;
+}
+.bookshelf-title-marker.bookshelf-title-marker-wantToRead {
+  background-color: #ACA75D;
+}
+.bookshelf-title-marker.bookshelf-title-marker-read {
+  background-color: #5D60AC;
+}
 .bookshelf-books {
   text-align: center;
 }
