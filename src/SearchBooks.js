@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import serializeForm from 'form-serialize'
-import * as BooksAPI from './BooksAPI'
-import Book from './Book'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import serializeForm from 'form-serialize';
+import PropTypes from 'prop-types';
+import * as BooksAPI from './BooksAPI';
+import Book from './Book';
 
 class SearchBooks extends Component {
 
@@ -98,8 +99,6 @@ class SearchBooks extends Component {
               <li key={book.id}>
                 <Book
                   book={book}
-                  coverWidth={128}
-                  coverHeight={193}
                   onShelfChange={this.handleBookShelfChange}
                 />
               </li>
@@ -111,4 +110,9 @@ class SearchBooks extends Component {
   }
 }
 
-export default SearchBooks
+SearchBooks.propTypes = {
+  books: PropTypes.arrayOf(PropTypes.object),
+  onBookShelfChange: PropTypes.func
+};
+
+export default SearchBooks;

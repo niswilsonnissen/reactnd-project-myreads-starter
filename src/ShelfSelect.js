@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class ShelfSelect extends Component {
 
@@ -26,5 +27,10 @@ class ShelfSelect extends Component {
     );
   }
 }
+
+ShelfSelect.propTypes = {
+  shelf: PropTypes.string,
+  onChange: PropTypes.func
+};
 
 export default ShelfSelect;

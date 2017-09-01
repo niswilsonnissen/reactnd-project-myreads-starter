@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ShelfSelect from './ShelfSelect'
+import PropTypes from 'prop-types';
 
 class Book extends Component {
   static NO_COVER_URL = '/images/no_cover_url.png';
@@ -53,4 +54,16 @@ class Book extends Component {
   }
 }
 
-export default Book
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  coverWidth: PropTypes.number,
+  coverHeight: PropTypes.number,
+  onShelfChange: PropTypes.func
+};
+
+Book.defaultProps = {
+  coverWidth: 128,
+  coverHeight: 193
+};
+
+export default Book;
