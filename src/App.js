@@ -61,8 +61,8 @@ class BooksApp extends React.Component {
       const bookIndex = newState.books.findIndex(b => b.id === book.id);
       if (bookIndex === -1 && shelf !== 'none') {
         newState.books.push({
-            ...book,
-            shelf
+          ...book,
+          shelf
         });
       } else if (bookIndex !== -1 && shelf === 'none') {
         newState.books.splice(bookIndex, 1);
@@ -85,14 +85,17 @@ class BooksApp extends React.Component {
             }}
           />
         )} />
-        <Route exact path="/" render={({ history }) => (
-          <ListBooks
-            books={this.state.books}
-            onBookShelfChange={(book, shelf) => {
-              this.updateBookShelf(book, shelf)
-            }}
-          />
-        )} />
+        <Route exact path="/" render={({ history }) => {
+          this.setState({ searchResult: [] });
+          return (
+            <ListBooks
+              books={this.state.books}
+              onBookShelfChange={(book, shelf) => {
+                this.updateBookShelf(book, shelf)
+              }}
+            />
+          )
+        }} />
       </div>
     )
   }
