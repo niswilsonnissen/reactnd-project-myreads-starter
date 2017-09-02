@@ -13,6 +13,8 @@ class SearchBooks extends Component {
     emptySearchResult: false
   }
 
+  timerHandle = null;
+
   handleBookShelfChange = (book, shelf) => {
     if (typeof this.props.onBookShelfChange === 'function' && this.props.onBookShelfChange != null) {
       this.props.onBookShelfChange(book, shelf);
@@ -23,10 +25,28 @@ class SearchBooks extends Component {
     this.setState(newState);
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const values = serializeForm(e.target, { hash: true });
-    this.searchBooks(values.query);
+  cancelExistingTimer() {
+    if (this.timerHandle !== null) {
+      clearTimeout(this.timerHandle);
+      this.timerHandle = null;
+    }
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();    
+    const values = serializeForm(event.target, { hash: true });
+    this.cancelExistingTimer();
+    if (values.query) {
+      this.searchBooks(values.query);
+    } else {
+      alert("Please enter a search query");
+    }
+  }
+
+  liveSearch = (event) => {
+    const query = event.target.value;
+    this.cancelExistingTimer();
+    this.timerHandle = setTimeout(() => this.searchBooks(query), 400);
   }
 
   searchBooks(query) {
@@ -47,7 +67,7 @@ class SearchBooks extends Component {
         }
       });
     } else {
-      alert("Please enter a search query");
+      this.setState({ books: [], emptySearchResult: false });
     }
   }
 
@@ -78,6 +98,7 @@ class SearchBooks extends Component {
               name="query"
               placeholder="Search by title or author"
               ref={elem => { this.queryInput = elem; }}
+              onChange={this.liveSearch}
             />
           </form>
         </div>
