@@ -4,6 +4,7 @@ import serializeForm from 'form-serialize';
 import PropTypes from 'prop-types';
 import * as BooksAPI from './BooksAPI';
 import Book from './Book';
+import * as BookUtil from './BookUtil';
 
 class SearchBooks extends Component {
 
@@ -16,18 +17,10 @@ class SearchBooks extends Component {
     if (typeof this.props.onBookShelfChange === 'function' && this.props.onBookShelfChange != null) {
       this.props.onBookShelfChange(book, shelf);
     }
-    let books = [];
-    for (let searchResult of this.state.books) {
-      if (searchResult.id === book.id) {
-        books.push({
-          ...searchResult,
-          shelf
-        });
-      } else {
-        books.push(searchResult);
-      }
-    }
-    this.setState({ books });
+    const newState = {
+      books: BookUtil.updateShelfStatus(this.state.books, book, shelf)
+    };
+    this.setState(newState);
   }
 
   handleSubmit = (e) => {

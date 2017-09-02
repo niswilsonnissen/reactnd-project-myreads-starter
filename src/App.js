@@ -4,6 +4,7 @@ import * as BooksAPI from './BooksAPI';
 import './App.css';
 import ListBooks from './ListBooks';
 import SearchBooks from './SearchBooks';
+import * as BookUtil from './BookUtil';
 
 class BooksApp extends React.Component {
 
@@ -17,25 +18,10 @@ class BooksApp extends React.Component {
     });
   }
 
-  updateBooks(books, updatedBook, shelf) {
-    let newState = [];
-    books.forEach(book => {
-      if (book.id === updatedBook.id) {
-        newState.push({
-          ...book,
-          shelf
-        });
-      } else {
-        newState.push(book);
-      }
-    });
-    return newState;
-  }
-
   updateBookShelf(book, shelf) {
     BooksAPI.update(book, shelf).then((response) => {
       let newState = {
-        books: this.updateBooks(this.state.books, book, shelf)
+        books: BookUtil.updateShelfStatus(this.state.books, book, shelf)
       };
       const bookIndex = newState.books.findIndex(b => b.id === book.id);
       if (bookIndex === -1 && shelf !== 'none') {
