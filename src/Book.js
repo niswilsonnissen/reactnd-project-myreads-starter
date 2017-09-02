@@ -3,7 +3,7 @@ import ShelfSelect from './ShelfSelect'
 import PropTypes from 'prop-types';
 
 class Book extends Component {
-  static NO_COVER_URL = '/images/no_cover_url.png';
+  static NO_COVER_URL = '/no-book-cover.png';
 
   handleShelfChange = (shelf) => {
     if (typeof this.props.onShelfChange === 'function' && this.props.onShelfChange != null) {
