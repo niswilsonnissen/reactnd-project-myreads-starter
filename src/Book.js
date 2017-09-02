@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import ShelfSelect from './ShelfSelect'
+import React, { Component } from 'react';
+import ShelfSelect from './ShelfSelect';
 import PropTypes from 'prop-types';
 
 class Book extends Component {
@@ -7,7 +7,7 @@ class Book extends Component {
 
   handleShelfChange = (shelf) => {
     if (typeof this.props.onShelfChange === 'function' && this.props.onShelfChange != null) {
-      this.props.onShelfChange(this.props.book, shelf)
+      this.props.onShelfChange(this.props.book, shelf);
     }
   }
 
@@ -28,26 +28,26 @@ class Book extends Component {
         <div className="book-title">{this.getTitle(book)}</div>
         <div className="book-authors">{this.getAuthors(book)}</div>
       </div>
-    )
+    );
   }
 
   getTitle(book) {
     if (book) {
-      return book.title
+      return book.title;
     }
     return '[MISSING TITLE]';
   }
 
   getAuthors(book) {
     if (book && book.authors && book.authors.length) {
-      return book.authors.join(', ')
+      return book.authors.join(', ');
     }
     return 'Unknown authors';
   }
 
   getCoverURL(book) {
     if (book && book.imageLinks) {
-      return book.imageLinks.smallThumbnail || book.imageLinks.thumbnail ||  Book.NO_COVER_URL
+      return book.imageLinks.smallThumbnail || book.imageLinks.thumbnail ||  Book.NO_COVER_URL;
     }
 
     return Book.NO_COVER_URL;

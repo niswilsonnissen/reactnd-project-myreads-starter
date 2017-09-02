@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Book from './Book'
+import Book from './Book';
 
 class BookShelf extends Component {
 
@@ -12,7 +12,7 @@ class BookShelf extends Component {
 
   render() {
     const { shelf, title } = this.props;
-    const styleClasses = ['bookshelf-title-marker', `bookshelf-title-marker-${shelf}`]
+    const styleClasses = ['bookshelf-title-marker', `bookshelf-title-marker-${shelf}`];
     return (
       <div className="bookshelf">
         <h2 className="bookshelf-title"><span className={styleClasses.join(' ')}></span> {title}</h2>
@@ -20,7 +20,7 @@ class BookShelf extends Component {
           <ol className="books-grid">
             {this.props.books.map((book) => (
               <li key={book.id}>
-                <Book 
+                <Book
                   book={book}
                   onShelfChange={this.handleBookShelfChange}
                 />
@@ -29,9 +29,8 @@ class BookShelf extends Component {
           </ol>
         </div>
       </div>
-    )
+    );
   }
-
 }
 
 BookShelf.propTypes = {

@@ -50,7 +50,7 @@ class SearchBooks extends Component {
               }
             }
           }
-          this.setState({ books: response, emptySearchResult: false })
+          this.setState({ books: response, emptySearchResult: false });
         }
       });
     } else {
@@ -106,7 +106,7 @@ class SearchBooks extends Component {
           </ol>
         </div>
       </div>
-    )
+    );
   }
 }
 
